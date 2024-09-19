@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Web Stretching</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:itals@0;1&display=swap" rel="stylesheet">
+<style type="text/css">
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+body{
+	font-family: "Instrument Serif", serif;
+	font-weight: 400;
+	font-style: italic;
+	overflow: hidden;
+}
+.container{
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+}
+.main-title{
+	font-size: 9vw;
+	text-align: center;
+}
+.met{
+    position: relative;
+    width: 50vw;
+    border-bottom: 20vh solid #96FEAD;
+    border-left: 15vw solid transparent;
+    border-right: 15vw solid transparent;
+    margin: auto;
+    padding-top: 55vh;
+}
+.met .stretch-message {
+    position: absolute;
+    right: -9vw;
+    bottom: -19vh;
+    font-size: 1.5vw;
+    font-style: italic;
+    color: #eb6cfa;
+}
+.img-con{
+	position: absolute;
+	bottom: 15vh;
+	width: 100vw;
+	height: 50vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.human img{
+	width:35vw;
+}
+.button-con{
+	position: absolute;
+	top: 5vh;
+	right: 2vw;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+button{
+	width: 8vw;
+	height: 8vw;
+	border-radius: 50%;
+	border: 2px solid black;
+	background-color: white;
+	font-size: 1.5vw;
+	color: black;
+	cursor: pointer;
+	transition: background-color 0.3s, color 0.3s;
+	font-family: "Instrument Serif", serif;
+	font-weight: 400;
+	font-style: italic;
+}
+button:hover{
+	background-color: black;
+	color: white;
+}
+
+
+.tips-btn {
+	position: absolute;
+	bottom: 7vh;
+	left: 2vw;
+	width: 10vw;
+	height: 4vw;
+	border-radius: 40%;
+	border: 2px solid black;
+	background-color: white;
+	font-size: 1.5vw;
+	color: black;
+	cursor: pointer;
+	transition: background-color 0.3s, color 0.3s;
+	font-family: "Instrument Serif", serif;
+	font-weight: 400;
+	font-style: italic;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.tips-btn:hover {
+	background-color: black;
+	color: white;
+}
+
+.popup-background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.7);
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
+
+.popup {
+	width: 50vw;
+	height: 30vw;
+	background-color: #96FEAD;
+	border-radius: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+
+.popup iframe {
+	width: 90%;
+	height: 90%;
+	border-radius: 15px;
+	border: none;
+}
+.popup .close-btn {
+	position: absolute;
+	top: 3%;
+	right: 2%;
+	background-color: white;
+	border: none;
+	font-size: 1.5vw;
+	cursor: pointer;
+	padding: 10px;
+	border-radius: 50%;
+	z-index: 2;
+	width: 20px;
+	height: 20px;
+}
+.popup .close-btn:hover{
+	background-color: black;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<div class="main-title">
+			Web Stretching
+		</div>
+		<div class="met">
+			<div class="stretch-message">Don’t forget to stretch while working!</div>
+		</div>
+		<div class="img-con">
+			<div class="human">
+				<img id="mainImage" src="2.png" alt="Main Image"> 
+			</div>
+		</div>
+		<div class="button-con">
+			<button id="changeImageBtn">Stretch!</button>
+			<button id="musicBtn">Music</button>
+		</div>
+
+		
+		<button class="tips-btn" id="tipsBtn">Tips</button>
+	</div>
+
+
+	<div class="popup-background" id="popupBackground">
+		<div class="popup" id="popup">
+			<button class="close-btn" id="closeBtn"></button>
+			<!-- YouTube 동영상 임베드 -->
+			<iframe id="videoPlayer" src="https://www.youtube.com/embed/wnlcuZ0mJSU?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+		</div>
+	</div>
+
+	<audio id="audioPlayer" src="relax.mp3"></audio> 
+
+	<script type="text/javascript">
+	
+		const images = ["2.png", "1.png", "2.png", "3.png"];
+		let currentIndex = 0;
+
+		document.getElementById("changeImageBtn").addEventListener("click", function() {
+			currentIndex = (currentIndex + 1) % images.length; 
+			document.getElementById("mainImage").src = images[currentIndex];
+		});
+
+
+		const audioPlayer = document.getElementById("audioPlayer");
+		let isPlaying = false;
+
+		document.getElementById("musicBtn").addEventListener("click", function() {
+			if (isPlaying) {
+				audioPlayer.pause(); 
+			} else {
+				audioPlayer.play(); 
+			}
+			isPlaying = !isPlaying; 
+		});
+
+		// 팝업 열기 및 닫기 기능
+		const popupBackground = document.getElementById("popupBackground");
+		const tipsBtn = document.getElementById("tipsBtn");
+		const closeBtn = document.getElementById("closeBtn");
+
+		tipsBtn.addEventListener("click", function() {
+			popupBackground.style.display = "flex"; 
+		});
+
+		closeBtn.addEventListener("click", function() {
+			popupBackground.style.display = "none"; 
+		});
+	</script>
+
+</body>
+</html>
